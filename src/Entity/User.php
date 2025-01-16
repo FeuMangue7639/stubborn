@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -38,7 +40,7 @@ class User
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -50,7 +52,7 @@ class User
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -62,7 +64,7 @@ class User
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
@@ -74,7 +76,7 @@ class User
         return $this->deliveryAddress;
     }
 
-    public function setDeliveryAddress(?string $deliveryAddress): static
+    public function setDeliveryAddress(?string $deliveryAddress): self
     {
         $this->deliveryAddress = $deliveryAddress;
 
@@ -82,19 +84,32 @@ class User
     }
 
     public function getRoles(): array
-{
-    $roles = $this->roles;
-    $roles[] = 'ROLE_USER';
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
 
-    return array_unique($roles);
-}
-
+        return array_unique($roles);
+    }
 
     public function setRoles(array $roles): self
-{
-    $this->roles = $roles;
+    {
+        $this->roles = $roles;
 
-    return $this;
-}
+        return $this;
+    }
 
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->getUserIdentifier();
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Nettoie les données sensibles si nécessaire.
+    }
 }
