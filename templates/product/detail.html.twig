@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du produit{% endblock %}
+
+{% block body %}
+    <h1>{{ product.name }}</h1>
+    <p>Prix : {{ product.price }} €</p>
+    <p>Stock : {{ product.stock }}</p>
+    <p>Taille : {{ product.size }}</p>
+    <p>{{ product.isHighlighted ? 'Produit mis en avant' : '' }}</p>
+    <a href="{{ path('product_list') }}">Retour à la liste</a>
+{% endblock %}
