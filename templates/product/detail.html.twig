@@ -8,5 +8,6 @@
     <p>Stock : {{ product.stock }}</p>
     <p>Taille : {{ product.size }}</p>
     <p>{{ product.isHighlighted ? 'Produit mis en avant' : '' }}</p>
+    <a href="{{ path('cart_add', { id: product.id }) }}" class="btn btn-primary">Ajouter au panier</a>
     <a href="{{ path('product_list') }}">Retour à la liste</a>
 {% endblock %}

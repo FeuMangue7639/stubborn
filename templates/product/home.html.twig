@@ -3,15 +3,54 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Produits mis en avant</h1>
-    <div class="product-list">
-        {% for product in products %}
-            <div class="product-item">
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.price }} €</p>
-                <a href="{{ path('product_detail', { id: product.id }) }}">Voir le produit</a>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Stubborn</h1>
+                <p>Don't compromise on your look</p>
             </div>
-        {% endfor %}
-    </div>
-{% endblock %}
+            <nav class="nav">
+                <a href="{{ path('home') }}">Accueil</a>
+                {% if app.user %}
+                    <a href="{{ path('product_list') }}">Boutique</a>
+                    <a href="{{ path('cart') }}">Panier</a>
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                {% else %}
+                    <a href="{{ path('app_register') }}">S'inscrire</a>
+                    <a href="{{ path('app_login') }}">Se connecter</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
 
+    <main class="products">
+        <div class="container">
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4 d-flex align-items-stretch"> <!-- Ajoute des colonnes flexibles -->
+                        <div class="product-card">
+                            <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.price }} €</p>
+                            {% if app.user %}
+                                <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">VOIR</a>
+                            {% else %}
+                                <p class="text-muted">Connectez-vous pour voir plus</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Aucun produit disponible pour le moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Nom de la société : Stubborn <br/>
+Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br/>
+Adresse de contact : stubborn@blabla.com</p>
+        </div>
+    </footer>
+{% endblock %}
