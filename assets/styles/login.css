@@ -1,0 +1,155 @@
+/* Header */
+.header {
+    background-color: #f4f4f4;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .logo h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header .logo p {
+    margin: 0;
+    font-size: 12px;
+    color: #555;
+}
+
+.header .nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.header .nav a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.header .nav a:hover {
+    text-decoration: underline;
+}
+
+/* Login Page */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Hauteur complète pour centrer */
+    background-color: #f8f9fa; /* Fond légèrement gris */
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Style du formulaire */
+.login-box {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.login-box .form-group {
+    margin-bottom: 15px;
+}
+
+.login-box label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.login-box .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Boutons */
+.login-box .btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-box .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Lien Mot de passe oublié */
+.login-box .forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-box .forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Ligne de séparation */
+.separator {
+    margin: 20px 0; /* Espace avant et après la ligne */
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+/* Texte centré */
+.login-box .not-registered {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Bouton Créer un compte */
+.login-box .not-registered .btn-secondary {
+    color: white;
+    background-color: #28a745; /* Vert Bootstrap */
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+}
+
+.login-box .not-registered .btn-secondary:hover {
+    background-color: #218838;
+}
+
+/* Footer */
+.footer {
+    background-color: #f4f4f4;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
