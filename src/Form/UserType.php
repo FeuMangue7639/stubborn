@@ -17,14 +17,18 @@ class UserType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom',
-                'required' => true, // Champ obligatoire
+                'label' => 'Nom utilisateur :',
+                'required' => true,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'Adresse mail :',
+            ])
+            ->add('deliveryAddress', TextType::class, [
+                'label' => 'Adresse de livraison :',
+                'required' => false,
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
+                'label' => 'Mot de passe :',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer un compte',
