@@ -24,10 +24,21 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products', name: 'product_list')]
-    public function list(EntityManagerInterface $entityManager): Response
+    public function list(EntityManagerInterface $entityManager, Request $request): Response
     {
-        // Récupère tous les produits
-        $products = $entityManager->getRepository(Product::class)->findAll();
+        // Gestion du tri par fourchette de prix
+        $priceRange = $request->query->get('priceRange');
+        $queryBuilder = $entityManager->getRepository(Product::class)->createQueryBuilder('p');
+
+        if ($priceRange) {
+            // Tranches mises à jour : 10-29.99, 30-35.99, 36-50
+            [$min, $max] = explode('-', $priceRange);
+            $queryBuilder->andWhere('p.price BETWEEN :min AND :max')
+                         ->setParameter('min', $min)
+                         ->setParameter('max', $max);
+        }
+
+        $products = $queryBuilder->getQuery()->getResult();
 
         return $this->render('product/list.html.twig', [
             'products' => $products,
@@ -87,40 +98,39 @@ class ProductController extends AbstractController
     }
 
     #[Route('/cart/update/{id}', name: 'cart_update', methods: ['POST'])]
-public function updateCart(Product $product, Request $request, SessionInterface $session): Response
-{
-    $cart = $session->get('cart', []);
-    $productId = $product->getId();
+    public function updateCart(Product $product, Request $request, SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+        $productId = $product->getId();
 
-    // Récupère la nouvelle quantité depuis le formulaire
-    $newQuantity = (int) $request->request->get('quantity', 1);
+        // Récupère la nouvelle quantité depuis le formulaire
+        $newQuantity = (int) $request->request->get('quantity', 1);
 
-    if (isset($cart[$productId])) {
-        if ($newQuantity > 0) {
-            $cart[$productId]['quantity'] = $newQuantity; // Met à jour la quantité
-        } else {
-            unset($cart[$productId]); // Supprime l'article si la quantité est 0
+        if (isset($cart[$productId])) {
+            if ($newQuantity > 0) {
+                $cart[$productId]['quantity'] = $newQuantity; // Met à jour la quantité
+            } else {
+                unset($cart[$productId]); // Supprime l'article si la quantité est 0
+            }
         }
+
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('cart');
     }
 
-    $session->set('cart', $cart);
+    #[Route('/cart/remove/{id}', name: 'cart_remove')]
+    public function removeFromCart(Product $product, SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+        $productId = $product->getId();
 
-    return $this->redirectToRoute('cart');
-}
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]); // Supprime l'article du panier
+        }
 
-#[Route('/cart/remove/{id}', name: 'cart_remove')]
-public function removeFromCart(Product $product, SessionInterface $session): Response
-{
-    $cart = $session->get('cart', []);
-    $productId = $product->getId();
+        $session->set('cart', $cart);
 
-    if (isset($cart[$productId])) {
-        unset($cart[$productId]); // Supprime l'article du panier
+        return $this->redirectToRoute('cart');
     }
-
-    $session->set('cart', $cart);
-
-    return $this->redirectToRoute('cart');
-}
-
 }

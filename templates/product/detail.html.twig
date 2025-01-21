@@ -1,13 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail du produit{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ product.name }}</h1>
-    <p>Prix : {{ product.price }} €</p>
-    <p>Stock : {{ product.stock }}</p>
-    <p>Taille : {{ product.size }}</p>
-    <p>{{ product.isHighlighted ? 'Produit mis en avant' : '' }}</p>
-    <a href="{{ path('cart_add', { id: product.id }) }}" class="btn btn-primary">Ajouter au panier</a>
-    <a href="{{ path('product_list') }}">Retour à la liste</a>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <h1>Stubborn</h1>
+            <p>Slogan</p>
+        </div>
+        <nav class="nav">
+            <a href="{{ path('home') }}">Accueil</a>
+            <a href="{{ path('product_list') }}">Boutique</a>
+            <a href="{{ path('cart') }}">Panier</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </nav>
+    </div>
+</header>
+
+<main class="product-page">
+    <div class="container">
+        <!-- Bloc commun -->
+        <div class="product-container">
+            <!-- Image du produit -->
+            <div class="product-image">
+                <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
+            </div>
+
+            <!-- Détails du produit -->
+            <div class="product-details">
+                <h2>{{ product.name }}</h2>
+                <p><strong>Prix :</strong> {{ product.price }} €</p>
+
+                <!-- Taille -->
+                <div class="form-group">
+                    <label for="size">Taille :</label>
+                    <select id="size" class="form-control">
+                        <option>XS</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                    </select>
+                </div>
+
+                <!-- Bouton Ajouter au panier -->
+                <button class="btn btn-primary">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>Nom de la société : Stubborn <br/>
+        Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br/>
+        Adresse de contact : stubborn@blabla.com</p>
+    </div>
+</footer>
 {% endblock %}

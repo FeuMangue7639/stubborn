@@ -1,16 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tous les produits{% endblock %}
+{% block title %}Boutique{% endblock %}
 
 {% block body %}
-    <h1>Liste des produits</h1>
-    <div class="product-list">
-        {% for product in products %}
-            <div class="product-item">
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.price }} €</p>
-                <a href="{{ path('product_detail', { id: product.id }) }}">Voir le produit</a>
-            </div>
-        {% endfor %}
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <h1>Stubborn</h1>
+            <p>Slogan</p>
+        </div>
+        <nav class="nav">
+            <a href="{{ path('home') }}">Accueil</a>
+            <a href="{{ path('product_list') }}" class="active">Boutique</a>
+            <a href="{{ path('cart') }}">Panier</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </nav>
     </div>
+</header>
+
+<main class="shop-page">
+    <div class="container">
+        <div class="shop-layout">
+            <!-- Bloc pour le filtre -->
+            <aside class="filter">
+                <h3>Fourchette de prix</h3>
+                <form method="get" action="{{ path('product_list') }}">
+                    <select name="priceRange" class="form-control" onchange="this.form.submit()">
+                        <option value="">Tous les prix</option>
+                        <option value="10-29.99" {{ app.request.query.get('priceRange') == '10-29.99' ? 'selected' : '' }}>10 à 29,99 €</option>
+                        <option value="30-35.99" {{ app.request.query.get('priceRange') == '30-35.99' ? 'selected' : '' }}>30 à 35,99 €</option>
+                        <option value="36-50" {{ app.request.query.get('priceRange') == '36-50' ? 'selected' : '' }}>36 à 50 €</option>
+                    </select>
+                </form>
+            </aside>
+
+            <!-- Bloc pour la grille des produits -->
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="product-info">
+                            <p><strong>Nom :</strong> {{ product.name }}</p>
+                            <p><strong>Prix :</strong> {{ product.price }} €</p>
+                            <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">VOIR</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>Nom de la société : Stubborn <br/>
+        Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br/>
+        Adresse de contact : stubborn@blabla.com</p>
+    </div>
+</footer>
 {% endblock %}
+
+
