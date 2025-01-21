@@ -44,8 +44,10 @@
                     </select>
                 </div>
 
-                <!-- Bouton Ajouter au panier -->
-                <button class="btn btn-primary">Ajouter au panier</button>
+                <!-- Formulaire pour ajouter au panier -->
+                <form method="post" action="{{ path('cart_add', { id: product.id }) }}">
+                    <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                </form>
             </div>
         </div>
     </div>
