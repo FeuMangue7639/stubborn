@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-Office{% endblock %}
+
+{% block body %}
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <h1>Stubborn</h1>
+            <p>Back-Office</p>
+        </div>
+        <nav class="nav">
+            <a href="{{ path('product_list') }}">Boutique</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </nav>
+    </div>
+</header>
+
+<main class="backoffice-page">
+    <div class="container">
+        <h1>Gestion des produits</h1>
+
+        <!-- Formulaire d'ajout -->
+        <section class="add-product">
+            <form method="post" action="{{ path('admin_add_product') }}" enctype="multipart/form-data">
+                <h2>Ajouter un produit</h2>
+                <div class="form-row">
+                    <label for="name">Nom :</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-row">
+                    <label for="price">Prix :</label>
+                    <input type="number" id="price" name="price" step="0.01" required>
+                </div>
+                <div class="form-row">
+                    <label for="image">Image :</label>
+                    <input type="file" id="image" name="image" required>
+                </div>
+                <div class="form-row">
+                    <label for="stock_xs">Stock XS :</label>
+                    <input type="number" id="stock_xs" name="stock_xs" min="0" required>
+                </div>
+                <div class="form-row">
+                    <label for="stock_s">Stock S :</label>
+                    <input type="number" id="stock_s" name="stock_s" min="0" required>
+                </div>
+                <div class="form-row">
+                    <label for="stock_m">Stock M :</label>
+                    <input type="number" id="stock_m" name="stock_m" min="0" required>
+                </div>
+                <div class="form-row">
+                    <label for="stock_l">Stock L :</label>
+                    <input type="number" id="stock_l" name="stock_l" min="0" required>
+                </div>
+                <div class="form-row">
+                    <label for="stock_xl">Stock XL :</label>
+                    <input type="number" id="stock_xl" name="stock_xl" min="0" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+        </section>
+
+        <!-- Liste des produits -->
+        <section class="product-list">
+            <h2>Produits existants</h2>
+            <div class="product-table">
+                {% for product in products %}
+                    <form method="post" action="{{ path('admin_update_product', { id: product.id }) }}">
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="{{ asset('images/' ~ product.image) }}" alt="{{ product.name }}">
+                            </div>
+                            <div class="product-info">
+                                <input type="number" name="stock_xs" value="{{ product.stockXS }}" min="0" required>
+<input type="number" name="stock_s" value="{{ product.stockS }}" min="0" required>
+<input type="number" name="stock_m" value="{{ product.stockM }}" min="0" required>
+<input type="number" name="stock_l" value="{{ product.stockL }}" min="0" required>
+<input type="number" name="stock_xl" value="{{ product.stockXL }}" min="0" required>
+
+                            </div>
+                            <div class="product-actions">
+                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                <a href="{{ path('admin_delete_product', { id: product.id }) }}" class="btn btn-danger">Supprimer</a>
+                            </div>
+                        </div>
+                    </form>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>Nom de la société : Stubborn <br/>
+        Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br/>
+        Adresse de contact : stubborn@blabla.com</p>
+    </div>
+</footer>
+{% endblock %}

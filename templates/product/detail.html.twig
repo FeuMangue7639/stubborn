@@ -33,21 +33,20 @@
                 <p><strong>Prix :</strong> {{ product.price }} €</p>
 
                 <!-- Taille -->
-                <div class="form-group">
-                    <label for="size">Taille :</label>
-                    <select id="size" class="form-control">
-                        <option>XS</option>
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                        <option>XL</option>
-                    </select>
-                </div>
-
-                <!-- Formulaire pour ajouter au panier -->
                 <form method="post" action="{{ path('cart_add', { id: product.id }) }}">
-                    <button type="submit" class="btn btn-primary">Ajouter au panier</button>
-                </form>
+    <div class="form-group">
+        <label for="size">Taille :</label>
+        <select name="size" id="size" class="form-control">
+            <option>XS</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+</form>
+
             </div>
         </div>
     </div>

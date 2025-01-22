@@ -72,30 +72,39 @@ class ProductController extends AbstractController
     }
 
     #[Route('/cart/add/{id}', name: 'cart_add')]
-    public function addToCart(Product $product, SessionInterface $session): Response
-    {
-        // Récupère le panier depuis la session
-        $cart = $session->get('cart', []);
+public function addToCart(Product $product, Request $request, SessionInterface $session): Response
+{
+    // Récupère le panier depuis la session
+    $cart = $session->get('cart', []);
 
-        // Si le produit existe déjà dans le panier, augmente la quantité
-        $productId = $product->getId();
-        if (isset($cart[$productId])) {
-            $cart[$productId]['quantity']++;
-        } else {
-            // Sinon, ajoute le produit au panier avec une quantité de 1
-            $cart[$productId] = [
-                'name' => $product->getName(),
-                'price' => $product->getPrice(),
-                'quantity' => 1,
-            ];
-        }
+    // Taille sélectionnée (par défaut "M")
+    $size = $request->request->get('size', 'M');
 
-        // Sauvegarde le panier dans la session
-        $session->set('cart', $cart);
+    // ID du produit
+    $productId = $product->getId();
 
-        // Redirige l'utilisateur vers la page du panier
-        return $this->redirectToRoute('cart');
+    // Si le produit existe déjà dans le panier, augmente la quantité
+    if (isset($cart[$productId])) {
+        $cart[$productId]['quantity']++;
+    } else {
+        // Sinon, ajoute le produit au panier avec ses détails
+        $cart[$productId] = [
+            'name' => $product->getName(),
+            'price' => $product->getPrice(),
+            'image' => $product->getImage(), // Inclut l'image
+            'size' => $size,               // Inclut la taille
+            'quantity' => 1,
+        ];
     }
+
+    // Sauvegarde le panier dans la session
+    $session->set('cart', $cart);
+
+    // Redirige vers la page du panier
+    return $this->redirectToRoute('cart');
+}
+
+
 
     #[Route('/cart/update/{id}', name: 'cart_update', methods: ['POST'])]
     public function updateCart(Product $product, Request $request, SessionInterface $session): Response
@@ -133,4 +142,42 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('cart');
     }
+
+    #[Route('/checkout', name: 'checkout')]
+public function checkout(SessionInterface $session): Response
+{
+    $cart = $session->get('cart', []);
+
+    // Vérifier que le panier n'est pas vide
+    if (empty($cart)) {
+        $this->addFlash('error', 'Votre panier est vide.');
+        return $this->redirectToRoute('product_list');
+    }
+
+    // Logique pour finaliser la commande (par exemple, sauvegarder dans la base de données)
+
+    // Vider le panier
+    $session->set('cart', []);
+
+    // Rediriger vers une page de confirmation ou un message de succès
+    return $this->render('cart/checkout.html.twig', [
+        'message' => 'Votre commande a été finalisée avec succès.',
+    ]);
+}
+
+#[Route('/backoffice', name: 'backoffice')]
+public function backoffice(EntityManagerInterface $entityManager): Response
+{
+    // Vérifier si l'utilisateur a le rôle administrateur
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+    // Récupérer tous les produits pour l'affichage
+    $products = $entityManager->getRepository(Product::class)->findAll();
+
+    return $this->render('admin/backoffice.html.twig', [
+        'products' => $products,
+    ]);
+}
+
+
 }

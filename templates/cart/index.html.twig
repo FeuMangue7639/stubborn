@@ -7,7 +7,14 @@
     <div class="container">
         <div class="logo">
             <h1>Stubborn</h1>
+            <p>Slogan</p>
         </div>
+        <nav class="nav">
+            <a href="{{ path('home') }}">Accueil</a>
+            <a href="{{ path('product_list') }}">Boutique</a>
+            <a href="{{ path('cart') }}" class="active">Panier</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </nav>
     </div>
 </header>
 
@@ -16,42 +23,72 @@
         <h1>Votre panier</h1>
 
         {% if cart|length > 0 %}
-            <table class="table">
+            <table class="cart-table">
                 <thead>
                     <tr>
-                        <th>Produit</th>
+                        <th>Image</th>
+                        <th>Nom</th>
                         <th>Prix</th>
-                        <th>Quantité</th>
-                        <th>Sous-total</th>
+                        <th>Taille</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for id, item in cart %}
-                        <tr>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.price }} €</td>
-                            <td>
-                                <form method="post" action="{{ path('cart_update', { id: id }) }}">
-                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control" />
-                                    <button type="submit" class="btn btn-primary">Modifier</button>
-                                </form>
-                            </td>
-                            <td>{{ (item.price * item.quantity)|number_format(2, '.', '') }} €</td>
-                            <td>
-                                <a href="{{ path('cart_remove', { id: id }) }}" class="btn btn-danger">Supprimer</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
+    {% for id, item in cart %}
+        <tr>
+            <!-- Image -->
+            <td>
+                <img src="{{ asset(item.image) }}" alt="{{ item.name }}" class="cart-image" style="width: 100px; height: auto;">
+            </td>
+
+            <!-- Nom -->
+            <td>{{ item.name }}</td>
+
+            <!-- Prix -->
+            <td>{{ item.price }} €</td>
+
+            <!-- Taille -->
+            <td>{{ item.size }}</td>
+
+            <!-- Quantité -->
+            <td>
+                <form method="post" action="{{ path('cart_update', { id: id }) }}">
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control" />
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </form>
+            </td>
+
+            <!-- Sous-total -->
+            <td>{{ (item.price * item.quantity)|number_format(2, '.', '') }} €</td>
+
+            <!-- Actions -->
+            <td>
+                <a href="{{ path('cart_remove', { id: id }) }}" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+
             </table>
 
-            <h3>Total : {{ total|number_format(2, '.', '') }} €</h3>
+            <div class="cart-summary">
+                <h3>Total : {{ total|number_format(2, '.', '') }} €</h3>
+                <div class="cart-actions">
+                    <a href="{{ path('checkout') }}" class="btn btn-success">Finaliser ma commande</a>
+                    <a href="{{ path('product_list') }}" class="btn btn-secondary">Continuer mes achats</a>
+                </div>
+            </div>
         {% else %}
             <p>Votre panier est vide.</p>
         {% endif %}
-
-        <a href="{{ path('product_list') }}" class="btn btn-secondary">Retour à la boutique</a>
     </div>
 </main>
+
+<footer class="footer">
+    <div class="container">
+        <p>Nom de la société : Stubborn <br/>
+        Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br/>
+        Adresse de contact : stubborn@blabla.com</p>
+    </div>
+</footer>
 {% endblock %}

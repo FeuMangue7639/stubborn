@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finalisation de la commande{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Finalisation de la commande</h1>
+        <p>{{ message }}</p>
+        <a href="{{ path('product_list') }}" class="btn btn-primary">Retour à la boutique</a>
+    </div>
+{% endblock %}
