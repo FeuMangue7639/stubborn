@@ -165,7 +165,7 @@ public function checkout(SessionInterface $session): Response
     ]);
 }
 
-#[Route('/backoffice', name: 'backoffice')]
+#[Route('/admin', name: 'backoffice')]
 public function backoffice(EntityManagerInterface $entityManager): Response
 {
     // Vérifier si l'utilisateur a le rôle administrateur
