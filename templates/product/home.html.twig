@@ -3,58 +3,62 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <h1>Stubborn</h1>
-                <p>Don't compromise on your look</p>
-            </div>
-            <nav class="nav">
-                <a href="{{ path('home') }}">Accueil</a>
-                {% if app.user %}
-                    <a href="{{ path('product_list') }}">Boutique</a>
-                    <a href="{{ path('cart') }}">Panier</a>
-                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                {% else %}
-                    <a href="{{ path('app_register') }}">S'inscrire</a>
-                    <a href="{{ path('app_login') }}">Se connecter</a>
-                {% endif %}
-            </nav>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <h1>Stubborn</h1>
+            <p>Don't compromise on your look</p>
         </div>
-    </header>
+        <nav class="nav">
+            <a href="{{ path('home') }}">Accueil</a>
+            {% if app.user %}
+                <a href="{{ path('product_list') }}">Boutique</a>
+                <a href="{{ path('cart') }}">Panier</a>
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_register') }}">S'inscrire</a>
+                <a href="{{ path('app_login') }}">Se connecter</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
 
-    <main class="products">
-        <div class="container">
-            <div class="row">
-                {% for product in products %}
-                    <div class="col-md-4 d-flex align-items-stretch">
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
-                            </div>
-                            <div class="product-info">
-                                <p><strong>Nom :</strong> {{ product.name }}</p>
-                                <p><strong>Prix :</strong> {{ product.price }} €</p>
-                                {% if app.user %}
-                                    <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">VOIR</a>
-                                {% else %}
-                                    <p class="text-muted">Connectez-vous pour voir plus</p>
-                                {% endif %}
-                            </div>
-                        </div>
+<main class="products">
+    <div class="container">
+        <!-- Utilisation de "g-4" pour espacement horizontal/vertical -->
+        <div class="row g-4 justify-content-center"> 
+            {% for product in products %}
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="product-card">
+                        <!-- Image -->
+                        <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
+
+                        <!-- Nom et prix -->
+                        <h3>Nom : {{ product.name }}</h3>
+                        <p>Prix : {{ product.price }} €</p>
+
+                        <!-- Bouton ou message selon l'état connecté -->
+                        {% if app.user %}
+                            <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">Voir plus</a>
+                        {% else %}
+                            <p class="text-muted">Connectez-vous pour voir plus</p>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <p>Aucun produit disponible pour le moment.</p>
-                {% endfor %}
-            </div>
+                </div>
+            {% else %}
+                <p>Aucun produit disponible pour le moment.</p>
+            {% endfor %}
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="footer">
-        <div class="container">
-            <p>Nom de la société : Stubborn <br/>
-Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br/>
-Adresse de contact : stubborn@blabla.com</p>
-        </div>
-    </footer>
+<footer class="footer">
+    <div class="container">
+        <p>
+            Nom de la société : Stubborn <br/>
+            Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br/>
+            Adresse de contact : stubborn@blabla.com
+        </p>
+    </div>
+</footer>
 {% endblock %}

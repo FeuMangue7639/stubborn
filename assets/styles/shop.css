@@ -51,17 +51,17 @@
     overflow: hidden;
     text-align: center;
     padding: 15px;
-    height: 400px; /* Hauteur augmentée pour les images */
+    height: 500px; /* Hauteur accrue pour permettre à l'image de mieux s'intégrer */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Répartir les éléments */
 }
 
 .product-card .product-image img {
-    width: 100%;
-    height: 250px; /* Hauteur pour les images */
-    object-fit: cover; /* Conserver les proportions */
-    border-bottom: 1px solid #ddd;
+    width: 100%; /* L'image prend toute la largeur */
+    height: 300px; /* Hauteur accrue pour bien afficher toute l'image */
+    object-fit: contain; /* Conserve les proportions sans rogner */
+    background-color: #f4f4f4; /* Fond clair pour améliorer la lisibilité des images plus petites */
 }
 
 .product-card .product-info {
@@ -87,4 +87,3 @@
 .product-card .btn:hover {
     background-color: #0056b3;
 }
-
