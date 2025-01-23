@@ -1,3 +1,30 @@
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background-color: #f8f9fa;
 }
+
+.footer {
+    text-align: left; /* Aligne tout le contenu à gauche */
+    padding: 10px 20px; /* Ajoute un peu de padding pour l'esthétique */
+    font-size: 16px; /* Ajuste la taille de la police si nécessaire */
+    color: #555; /* Couleur du texte pour la lisibilité */
+    background-color: #f4f4f4; /* Optionnel : couleur de fond du footer */
+}
+
+
+/* S'assure que la page occupe toute la hauteur */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Contenu principal qui prend l'espace restant */
+.products {
+    flex: 1;
+}
+
+

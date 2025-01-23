@@ -1,5 +1,8 @@
 /* Page Panier */
 .cart-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Assure que la page prend toute la hauteur de la fenêtre */
     padding: 40px 0;
     background-color: #f8f9fa;
 }
@@ -58,5 +61,11 @@
     color: white;
     border: none;
     border-radius: 4px;
+}
+
+
+/* Conteneur principal pour occuper l'espace */
+.cart-page .container {
+    flex: 1; /* Permet au contenu principal de s'étendre */
 }
 

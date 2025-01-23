@@ -46,7 +46,8 @@
 }
 
 .product-card {
-    width: 300px; /* Fixe une largeur uniforme pour tous les blocs */
+    width: 350px; /* Fixe une largeur uniforme pour tous les blocs */
+    min-height: 450px; /* Définit une hauteur minimale */
     border: 1px solid #ddd;
     padding: 20px;
     text-align: center;
@@ -60,7 +61,7 @@
 
 .product-card img {
     max-width: 100%;
-    height: auto;
+    height: 400px;
     border-radius: 8px;
     margin-bottom: 10px;
 }

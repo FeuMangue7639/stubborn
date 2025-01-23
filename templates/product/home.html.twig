@@ -27,16 +27,20 @@
         <div class="container">
             <div class="row">
                 {% for product in products %}
-                    <div class="col-md-4 d-flex align-items-stretch"> <!-- Ajoute des colonnes flexibles -->
+                    <div class="col-md-4 d-flex align-items-stretch">
                         <div class="product-card">
-                            <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
-                            <h3>{{ product.name }}</h3>
-                            <p>{{ product.price }} €</p>
-                            {% if app.user %}
-                                <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">VOIR</a>
-                            {% else %}
-                                <p class="text-muted">Connectez-vous pour voir plus</p>
-                            {% endif %}
+                            <div class="product-image">
+                                <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
+                            </div>
+                            <div class="product-info">
+                                <p><strong>Nom :</strong> {{ product.name }}</p>
+                                <p><strong>Prix :</strong> {{ product.price }} €</p>
+                                {% if app.user %}
+                                    <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">VOIR</a>
+                                {% else %}
+                                    <p class="text-muted">Connectez-vous pour voir plus</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 {% else %}
