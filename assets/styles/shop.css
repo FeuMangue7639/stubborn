@@ -7,7 +7,7 @@
 .shop-layout {
     display: grid;
     grid-template-columns: 200px 1fr; /* Largeur du filtre et de la grille */
-    gap: 20px; /* Espace entre le filtre et la grille */
+    gap: 20px;
     align-items: flex-start;
 }
 
@@ -38,8 +38,8 @@
 /* Grille des produits */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Colonnes flexibles */
-    gap: 30px; /* Espacement plus grand entre les produits */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colonnes flexibles */
+    gap: 30px;
 }
 
 /* Carte produit */
@@ -48,32 +48,30 @@
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
     text-align: center;
-    padding: 15px;
-    height: 500px; /* Hauteur accrue pour permettre à l'image de mieux s'intégrer */
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Répartir les éléments */
+    justify-content: space-between;
 }
 
 .product-card .product-image img {
-    width: 100%; /* L'image prend toute la largeur */
-    height: 300px; /* Hauteur accrue pour bien afficher toute l'image */
-    object-fit: contain; /* Conserve les proportions sans rogner */
-    background-color: #f4f4f4; /* Fond clair pour améliorer la lisibilité des images plus petites */
+    width: 310px; /* Largeur fixe */
+    height: 350px; /* Hauteur fixe */
+    object-fit: contain; /* Ajuste l'image sans la couper */
+    border-radius: 8px;
+    margin: 0 auto 20px; /* Centre l'image et ajoute un espacement */
 }
 
-.product-card .product-info {
-    padding: 10px;
+.product-card .product-details {
+    margin-bottom: 10px; /* Réduit l'espace entre les détails et le bouton */
 }
 
-.product-card .product-info p {
-    margin: 5px 0;
+.product-card .product-footer {
+    margin-top: 0; /* Supprime l'espace vide */
 }
 
 .product-card .btn {
-    display: inline-block;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
