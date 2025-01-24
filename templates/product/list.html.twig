@@ -38,13 +38,24 @@
             <div class="product-grid">
                 {% for product in products %}
                     <div class="product-card">
+                        <!-- Image -->
                         <div class="product-image">
                             <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
                         </div>
-                        <div class="product-info">
-                            <p><strong>Nom :</strong> {{ product.name }}</p>
-                            <p><strong>Prix :</strong> {{ product.price }} €</p>
-                            <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">VOIR</a>
+
+                        <!-- Nom et prix -->
+                        <div class="product-details">
+                            <h3>Nom : {{ product.name }}</h3>
+                            <p>Prix : {{ product.price }} €</p>
+                        </div>
+
+                        <!-- Bouton -->
+                        <div class="product-footer">
+                            {% if app.user %}
+                                <a href="{{ path('product_detail', { id: product.id }) }}" class="btn btn-primary">Voir plus</a>
+                            {% else %}
+                                <p class="text-muted">Connectez-vous pour voir plus</p>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
@@ -61,5 +72,3 @@
     </div>
 </footer>
 {% endblock %}
-
-
