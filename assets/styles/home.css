@@ -85,6 +85,14 @@
     margin-top: 15px; /* Éloigne le bouton ou le texte en bas */
 }
 
+
+
+.logo-img {
+    width: 100px; /* ✅ Ajuste la largeur du logo */
+    height: auto; /* ✅ Garde les proportions */
+}
+
+
 /* Footer */
 .footer {
     background-color: #f4f4f4;
