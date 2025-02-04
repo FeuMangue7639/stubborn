@@ -1,11 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Finalisation de la commande{% endblock %}
+{% block title %}Paiement{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Finalisation de la commande</h1>
-        <p>{{ message }}</p>
-        <a href="{{ path('product_list') }}" class="btn btn-primary">Retour à la boutique</a>
+        <h1>Finaliser votre commande</h1>
+        <p><strong>Total à payer :</strong> {{ (total / 100)|number_format(2, ',', ' ') }} €</p> <!-- Affichage correct en euros -->
+
+        <button id="checkout-button" class="btn btn-primary">Payer avec Stripe</button>
+        <a href="{{ path('product_list') }}" class="btn btn-secondary">Retour à la boutique</a>
     </div>
+    
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        document.getElementById("checkout-button").addEventListener("click", function () {
+            fetch("{{ path('create_checkout_session') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ total: {{ total }} }) // Envoi du total en centimes
+            })
+            .then(response => response.json())
+            .then(session => {
+                if (session.error) {
+                    console.error("Erreur Stripe:", session.error);
+                    return;
+                }
+                return Stripe("{{ stripe_public_key }}").redirectToCheckout({ sessionId: session.id });
+            })
+            .catch(error => console.error("Erreur :", error));
+        });
+    </script>
 {% endblock %}
