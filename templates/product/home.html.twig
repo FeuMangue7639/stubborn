@@ -30,8 +30,12 @@
             {% for product in products %}
                 <div class="col-md-4 d-flex align-items-stretch">
                     <div class="product-card">
-                        <!-- Image -->
-                        <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
+                        <!-- Image avec vérification -->
+                        {% if product.image %}
+                            <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{{ asset('images/default.jpg') }}" alt="Image par défaut">
+                        {% endif %}
 
                         <!-- Nom et prix -->
                         <h3>Nom : {{ product.name }}</h3>
